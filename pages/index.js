@@ -1,7 +1,19 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-export default function Home() {
+import styles from '../styles/Home.module.css'
+import { POST, GET } from '../lib/axios'
+import stripe from '../lib/stripe'
+
+const IndexPage = (props) => {
+  const router = useRouter()
+
+  const post = async () => {
+    const result = await POST('/api/create-connect-account', { name: 'test', email: 'test@mail.com'})
+    await router.push(result.url)
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,55 +23,30 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Stripe Connectのテスト!
         </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <button id="submit" onClick={() => post()}>Setup payouts on Stripe</button>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   )
 }
+
+export const getServerSideProps = async () => {
+  const accounts = await stripe.accounts.list()
+
+  const accountData = []
+  accounts.data.forEach(account => {
+    accountData.push({
+      name: account.business_profile.name,
+      id: account.id
+    })
+  })
+
+  return {
+    props: {
+      accountData: accountData,
+    }
+  }
+}
+
+export default IndexPage
