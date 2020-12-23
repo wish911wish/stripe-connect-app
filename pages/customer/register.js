@@ -30,16 +30,10 @@ const RegisterPage = () => {
   return (
     <Layout>
       <main className={styles.main}>
-        <div>
-          <h4>まずは名前の登録を行ってください</h4>
-          <form onSubmit={(e) => registerCustomer(e)}>
-            <input type="text" defaultValue={name} onChange={(e) => setName(e.target.value)}></input>
-            <button>名前を登録する</button>
-          </form>
-        </div>
-        {customerState.client_secret && (
+        {customerState.client_secret ? (
           <div>
-            <h4>クレジットカードの登録フォーム</h4>
+            <h4>こちら↓からクレジットカードを登録してください</h4>
+            <p>**テスト用の番号 "4242424242424242" を使用してください**</p>
             {loading ? (
               '登録中...'
             ):(
@@ -47,6 +41,14 @@ const RegisterPage = () => {
                 <CardInputForm clientSecret={customerState.client_secret} customerName={customerState.name}/>
               </Elements >
             )}
+          </div>
+        ) : (
+          <div>
+            <h4>お客様のお名前を登録してください</h4>
+            <form onSubmit={(e) => registerCustomer(e)}>
+              <input type="text" defaultValue={name} onChange={(e) => setName(e.target.value)}></input>
+              <button>名前を登録する</button>
+            </form>
           </div>
         )}
       </main>

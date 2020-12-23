@@ -23,10 +23,11 @@ const RegisterPage = (props) => {
 
 export const getServerSideProps = async () => {
   const shopData = await stripe.accounts.list()
+  const activeShop = shopData.data.filter((s) => s.charges_enabled)
 
   return {
     props: {
-      shopList: shopData.data,
+      shopList: activeShop,
     }
   }
 }

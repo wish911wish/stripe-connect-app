@@ -20,12 +20,10 @@ const RegisterPage = (props) => {
 export const getServerSideProps = async (ctx) => {
   const accountId = ctx.query.id
   const loginLink = await stripe.accounts.createLoginLink(accountId)
-  console.log(loginLink)
 
   return {
     props: {
-      loginLinkUrl: loginLink.url,
-      shopId: ctx.query.id
+      loginLinkUrl: loginLink.url
     }
   }
 }
