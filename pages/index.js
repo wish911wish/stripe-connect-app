@@ -18,9 +18,9 @@ const IndexPage = (props) => {
   return (
     <Layout>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Stripe Connectのテスト!
-        </h1>
+        <h2 className={styles.title}>
+          Stripe Connectのプロトタイプ
+        </h2>
         <h2>ユーザー用のメニュー</h2>
         <div className={styles.grid}>	
           <Link href="customer/shop">
