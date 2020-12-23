@@ -1,9 +1,7 @@
 import styles from '../../../styles/Home.module.css'
 import * as React from 'react'
 import {Elements} from '@stripe/react-stripe-js';
-// import stripePromise from '../../../lib/loadStripe'
 import {loadStripe} from '@stripe/stripe-js';
-import { POST } from '../../../lib/axios'
 import Layout from '../../../component/Layout'
 import { CustomerContext } from '../../../context/CustomerContext'
 import CheckoutForm from '../../../component/CheckoutForm'

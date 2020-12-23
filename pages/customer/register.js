@@ -1,11 +1,11 @@
 import * as React from 'react'
-import styles from '../../styles/Home.module.css'
+import { Elements } from '@stripe/react-stripe-js'
 import stripePromise from '../../lib/loadStripe'
-import {Elements} from '@stripe/react-stripe-js'
-import CardInputForm from '../../component/CardInputForm'
 import { CustomerContext } from '../../context/CustomerContext'
 import { POST } from '../../lib/axios'
 import Layout from '../../component/Layout'
+import styles from '../../styles/Home.module.css'
+import CardInputForm from '../../component/CardInputForm'
 
 const RegisterPage = () => {
   const { customerState, customerSetter } = React.useContext(CustomerContext)
@@ -14,11 +14,8 @@ const RegisterPage = () => {
 
   const registerCustomer = async (e) => {
     e.preventDefault()
-
     setLoading(true)
-
     const result = await POST('/api/register-customer', { customerName: name })
-
     customerSetter({
       name: result.name,
       id: result.id,
