@@ -5,30 +5,40 @@ import styles from '../styles/Home.module.css'
 
 
 const CheckoutForm = (props) => {
-    const [message, setMessage] = React.useState()
+  const [message, setMessage] = React.useState()
 
-    const stripe = useStripe()
-
-    const handleSubmit = async () => {
-        setMessage('送金中。。。')
-        const result = await POST('/api/execute-charge', { hospital_id: props.hospitalId, email: 'test@mail.com'})
+  const stripe = useStripe()
     
-        const paymentResult = await stripe.confirmCardPayment(result.client_secret)
-        if (paymentResult.paymentIntent.status == 'succeeded') {
-            setMessage('送金が成功しました')
-        } else {
-            setMessage('送金が失敗しました')
-        }
-      }
+  const handleSubmit = async () => {
+    setMessage('処理中。。。')
+    const result = await POST(`/api/shop/${props.shopId}/buy`, {
+      customer_id: props.customerId,
+      item: props.item
+    })
 
-    return (
-        <>
-            <div onClick={() => handleSubmit()}><h3>100円送金する</h3></div>
-            {message && (
-                <div className={styles.title}>{message}</div>
-            )}
-        </>
-    )
+    const confirm_result = window.confirm('選択した商品を購入します。よろしいですか？');
+
+    if (confirm_result) {
+      const paymentResult = await stripe.confirmCardPayment(result.client_secret)
+      if (paymentResult.error) {
+        setMessage('失敗しました')
+      } else {
+        setMessage('購入しました')
+      }  
+    } else {
+      setMessage('')
+    }
+  }
+
+  return (
+    <div onClick={() => handleSubmit()}>
+      <h3>{props.item.name}</h3>
+      <div>¥{props.item.price}</div>
+      {message && (
+        <div className={styles.title}>{message}</div>
+      )}
+    </div>
+  )
 }
 
 export default CheckoutForm

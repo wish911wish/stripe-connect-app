@@ -74,15 +74,16 @@
 .grid {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 
   max-width: 800px;
-  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .card {
   margin: 1rem;
+  min-width: 250px;
   flex-basis: 45%;
   padding: 1.5rem;
   text-align: left;
@@ -98,6 +99,7 @@
 .card:active {
   color: #0070f3;
   border-color: #0070f3;
+  cursor: pointer;
 }
 
 .card h3 {

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+import Layout from '../component/Layout'
 import styles from '../styles/Home.module.css'
 import { POST, GET } from '../lib/axios'
 import stripe from '../lib/stripe'
@@ -15,19 +16,43 @@ const IndexPage = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <Layout>
       <main className={styles.main}>
         <h1 className={styles.title}>
           Stripe Connectのテスト!
         </h1>
-        <button id="submit" onClick={() => post()}>Setup payouts on Stripe</button>
+        <h2>ユーザー用のメニュー</h2>
+        <div className={styles.grid}>	
+          <Link href="customer/shop">
+            <a className={styles.card}>	
+              <h3>商品を購入する</h3>	
+              <p>
+                商品を購入する
+              </p>
+            </a>
+          </Link>
+          <Link href="customer/register">
+            <a className={styles.card}>	
+              <h3>クレジットカードを登録する</h3>	
+              <p>
+                商品を購入するためのクレジットカードを登録する
+              </p>	
+            </a>
+          </Link>
+        </div>
+        <h2>店舗オーナー用のメニュー</h2>
+        <div className={styles.grid}>	
+          <Link href="owner/register">
+            <a className={styles.card}>	
+              <h3>店舗の登録</h3>	
+              <p>
+                店舗の銀行口座を登録する
+              </p>
+            </a>
+          </Link>
+        </div>
       </main>
-    </div>
+    </Layout>
   )
 }
 
