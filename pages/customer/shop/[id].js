@@ -1,13 +1,14 @@
-import styles from '../../../styles/Home.module.css'
 import * as React from 'react'
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-import Layout from '../../../component/Layout'
 import { CustomerContext } from '../../../context/CustomerContext'
+import Layout from '../../../component/Layout'
+import styles from '../../../styles/Home.module.css'
 import CheckoutForm from '../../../component/CheckoutForm'
 
 const RegisterPage = (props) => {
   const { customerState } = React.useContext(CustomerContext)
+
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     { stripeAccount: props.shopId}
