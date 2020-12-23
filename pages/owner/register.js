@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Layout from '../../component/Layout'
 import styles from '../../styles/Home.module.css'
 import stripe from '../../lib/stripe'
 import { POST, GET } from '../../lib/axios'
@@ -14,21 +15,16 @@ const RegisterPage = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-
-    <main className={styles.main}>
-      <h2>店舗オーナー用のメニュー</h2>
-      <div className={styles.grid}>	
-        <div className={styles.card} onClick={() => post()}>
-          <p>店舗の銀行口座を登録する</p>
+    <Layout>
+      <main className={styles.main}>
+        <h2>店舗オーナー用のメニュー</h2>
+        <div className={styles.grid}>	
+          <div className={styles.card} onClick={() => post()}>
+            <p>店舗の銀行口座を登録する</p>
+          </div>
         </div>
-      </div>
-    </main>
-  </div>
+      </main>
+    </Layout>
   )
 }
 

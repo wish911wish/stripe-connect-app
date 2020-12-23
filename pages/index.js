@@ -50,6 +50,14 @@ const IndexPage = (props) => {
               </p>
             </a>
           </Link>
+          <Link href="owner/shop">
+            <a className={styles.card}>	
+              <h3>店舗の一覧</h3>	
+              <p>
+                口座登録が完了した店舗の一覧
+              </p>
+            </a>
+          </Link>
         </div>
       </main>
     </Layout>
